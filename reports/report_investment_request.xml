@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_print_investment_request" model="ir.actions.report">
+        <field name="name">Report: Investment Request</field>
+        <field name="model">lm.investment_request</field>
+        <field name="report_type">qweb-html</field>
+        <field name="binding_model_id" ref="model_lm_investment_request"/>
+        <field name="binding_type">report</field>
+        <field name="report_name">lands_management.report_investment_request_template</field>
+    </record>
+
+    <template id="report_investment_request_template">
+        <t t-call="web.html_container">
+
+            <t t-foreach="docs" t-as="doc">
+
+                <div class="header" style="text-align: center; margin-bottom: 30px;">
+                    <h1 style="font-size: 24px; color: #1a6aa2; margin-bottom: 10px;">محضر طلب أولي</h1>
+                    <h2 style="font-size: 18px; color: #0d4a7a;">نموذج طلب فرصة استثمارية</h2>
+                </div>
+
+                <!-- معلومات الطلب الأساسية -->
+                <div class="request-info"
+                     style="display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 15px;">
+                    <div>
+                        <strong>رقم الطلب:</strong>
+                        <t t-esc="doc.investment_name"/>
+                    </div>
+                    <div>
+                        <strong>تاريخ الطلب:</strong>
+                        <t t-esc="doc.request_date"/>
+                    </div>
+                </div>
+
+                <!-- القسم 1: بيانات الفرصة -->
+                <div class="section" style="margin-bottom: 30px;">
+                    <div class="section-header"
+                         style="background-color: #1a6aa2; color: white; padding: 8px 15px; border-radius: 4px; margin-bottom: 15px;">
+                        <h3 style="margin: 0;">أولاً: بيانات ومؤشرات الفرصة (الشروع)</h3>
+                    </div>
+
+                    <div class="section-content">
+                        <table style="width: 100%; margin-bottom: 20px;">
+                            <tr>
+                                <td style="width: 30%; padding: 5px;">
+                                    <strong>اسم الفرصة (الشروع):</strong>
+                                </td>
+                                <td style="width: 70%; padding: 5px; border-bottom: 1px solid #eee;">
+                                    <t t-esc="doc.investment_name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;">
+                                    <strong>وصف نشاط الفرصة:</strong>
+                                </td>
+                                <td style="padding: 5px; border-bottom: 1px solid #eee;">
+                                    <t t-esc="doc.description or ''"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;">
+                                    <strong>تصنيف النشاط:</strong>
+                                </td>
+                                <td style="padding: 5px; border-bottom: 1px solid #eee;">
+                                    <t t-esc="doc.activity_classification"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;">
+                                    <strong>القطاع الرئيسي:</strong>
+                                </td>
+                                <td style="padding: 5px; border-bottom: 1px solid #eee;">
+                                    <t t-esc="doc.main_sector_id.name or ''"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;">
+                                    <strong>القطاع الفرعي:</strong>
+                                </td>
+                                <td style="padding: 5px; border-bottom: 1px solid #eee;">
+                                    <t t-esc="doc.sub_sector_id.name or ''"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- جدول المنتجات/الخدمات -->
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="background-color: #f1f1f1; padding: 8px; margin-bottom: 10px;">المنتجات /
+                                الخدمات
+                                والطاقة السنوية القصوى
+                            </h4>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background-color: #2c7fb8; color: white;">
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">المنتجات/الخدمات</th>
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">الطاقة الإنتاجية
+                                            السنوية
+                                        </th>
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">الوحدة</th>
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">اللغة/الخدمة</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.product_ids" t-as="line">
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.product_name or ''"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.capacity or ''"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.unit or ''"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.notes or ''"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- بيانات موقع الفرصة -->
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="background-color: #f1f1f1; padding: 8px; margin-bottom: 10px;">بيانات موقع
+                                الفرصة
+                            </h4>
+                            <div style="padding: 0 10px;">
+                                <p>
+                                    <strong>المحافظة:</strong>
+                                    <t t-esc="doc.governorate or ''"/>
+                                </p>
+                                <p>
+                                    <strong>المديرية:</strong>
+                                    <t t-esc="doc.district or ''"/>
+                                </p>
+                                <p>
+                                    <strong>المدينة:</strong>
+                                    <t t-esc="doc.city or ''"/>
+                                </p>
+                                <p>
+                                    <strong>الحي:</strong>
+                                    <t t-esc="doc.neighborhood or ''"/>
+                                </p>
+                                <p>
+                                    <strong>الشارع:</strong>
+                                    <t t-esc="doc.street or ''"/>
+                                </p>
+                                <p>
+                                    <strong>الوحدة:</strong>
+                                    <t t-esc="doc.subunit or ''"/>
+                                </p>
+                                <p>
+                                    <strong>إحداثيات X:</strong>
+                                    <t t-esc="doc.x_coordinates or ''"/>
+                                </p>
+                                <p>
+                                    <strong>إحداثيات Y:</strong>
+                                    <t t-esc="doc.y_coordinates or ''"/>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- بيانات استخدامات الأرض -->
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="background-color: #f1f1f1; padding: 8px; margin-bottom: 10px;">بيانات
+                                استخدامات
+                                الأرض اللازمة للمشروع
+                            </h4>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background-color: #2c7fb8; color: white;">
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">الملاحظة</th>
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">الاستخدام</th>
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">المساحة (م²)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.land_usage_ids" t-as="line">
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.note or ''"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.use_type or ''"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.area_m2 or ''"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="margin-top: 10px;">
+                                <strong>إجمالي مساحة الأرض:</strong>
+                                <t t-esc="doc.lands_area_space or 0"/>
+                            </div>
+                        </div>
+
+                        <!-- معلومات التمويل -->
+                        <div>
+                            <h4 style="background-color: #f1f1f1; padding: 8px; margin-bottom: 10px;">بيانات التمويل
+                            </h4>
+                            <div style="display: flex; margin-bottom: 15px;">
+                                <div style="flex: 1; padding: 0 10px;">
+                                    <strong>رأس المال الاستثماري التقديري:</strong>
+                                    <t t-esc="doc.investment_cost or 0"/>
+                                </div>
+                                <div style="flex: 1; padding: 0 10px;">
+                                    <strong>قيمة الآلات والمعدات والتجهيزات:</strong>
+                                    <t t-esc="doc.equipment_value"/>
+                                </div>
+                            </div>
+
+                            <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                                <thead>
+                                    <tr style="background-color: #2c7fb8; color: white;">
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">مصادر التمويل</th>
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">محلي، دولار</th>
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">أجنبي، دولار</th>
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">الإجمالي، دولار</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.funding_sources_ids" t-as="line">
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.funding_type or ''"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.local_amount or '0.0'"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.foreign_amount or '0.0'"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.subtotal or '0.0'"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- القسم 2: العمالة والفترة الزمنية -->
+                <div class="section" style="margin-bottom: 30px;">
+                    <div class="section-header"
+                         style="background-color: #1a6aa2; color: white; padding: 8px 15px; border-radius: 4px; margin-bottom: 15px;">
+                        <h3 style="margin: 0;">ثانياً: العمالة والفترة الزمنية</h3>
+                    </div>
+
+                    <div class="section-content">
+                        <!-- حجم العمالة -->
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="background-color: #f1f1f1; padding: 8px; margin-bottom: 10px;">حجم العمالة
+                                التي
+                                سيحتاجها المشروع
+                            </h4>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background-color: #2c7fb8; color: white;">
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">نوع العمالة</th>
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">محلي</th>
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">أجنبي</th>
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">الإجمالي</th>
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">ملاحظات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.labor_ids" t-as="line">
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.type or ''"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="(line.type == 'local') and line.count or '0'"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="(line.type == 'foreign') and line.count or '0'"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.count or '0'"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.notes or ''"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- العمالة الأجنبية -->
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="background-color: #f1f1f1; padding: 8px; margin-bottom: 10px;">العمالة
+                                الأجنبية
+                            </h4>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background-color: #2c7fb8; color: white;">
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">التخصص</th>
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">الجنسية</th>
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">العدد</th>
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">الفترة الزمنية
+                                            اللازمة
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.labor_ids.filtered(lambda l: l.type == 'foreign')"
+                                        t-as="line">
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.specialization or ''"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.nationality.name or ''"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.count or '0'"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="''"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- الفترة الزمنية -->
+                        <div>
+                            <h4 style="background-color: #f1f1f1; padding: 8px; margin-bottom: 10px;">الفترة الزمنية
+                                اللازمة للأعمال والدراسات للمشروع
+                            </h4>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background-color: #2c7fb8; color: white;">
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">البيان</th>
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">الفترة التقديرية (يوم
+                                            عمل)
+                                        </th>
+                                        <th style="padding: 8px; border: 1px solid #1a6aa2;">ملاحظة</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.time_line_ids" t-as="line">
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.task_name or ''"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.duration_days or ''"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                                            <t t-esc="line.note or ''"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- القسم 3: بيانات المستثمر -->
+                <div class="section" style="margin-bottom: 30px;">
+                    <div class="section-header"
+                         style="background-color: #1a6aa2; color: white; padding: 8px 15px; border-radius: 4px; margin-bottom: 15px;">
+                        <h3 style="margin: 0;">ثالثاً: بيانات المستثمر (مالك المشروع)</h3>
+                    </div>
+
+                    <div class="section-content">
+                        <table style="width: 100%; margin-bottom: 20px;">
+                            <tr>
+                                <td style="width: 30%; padding: 5px;">
+                                    <strong>اسم المستثمر:</strong>
+                                </td>
+                                <td style="width: 70%; padding: 5px; border-bottom: 1px solid #eee;">
+                                    <t t-esc="doc.investor_name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;">
+                                    <strong>الشكل القانوني:</strong>
+                                </td>
+                                <td style="padding: 5px; border-bottom: 1px solid #eee;">
+                                    <t t-esc="doc.legal_form"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;">
+                                    <strong>جنسية المستثمر:</strong>
+                                </td>
+                                <td style="padding: 5px; border-bottom: 1px solid #eee;">
+                                    <t t-esc="doc.nationality.name or ''"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;">
+                                    <strong>رقم السجل التجاري:</strong>
+                                </td>
+                                <td style="padding: 5px; border-bottom: 1px solid #eee;">
+                                    <t t-esc="doc.commercial_reg"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;">
+                                    <strong>رقم البطاقة الشخصية / الجواز:</strong>
+                                </td>
+                                <td style="padding: 5px; border-bottom: 1px solid #eee;">
+                                    <t t-esc="doc.id_number"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- العنوان الإداري -->
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="background-color: #f1f1f1; padding: 8px; margin-bottom: 10px;">العنوان
+                                الإداري
+                            </h4>
+                            <div style="padding: 0 10px;">
+                                <p>
+                                    <strong>المحافظة:</strong>
+                                    <t t-esc="doc.governorate"/>
+                                </p>
+                                <p>
+                                    <strong>المديرية:</strong>
+                                    <t t-esc="doc.district"/>
+                                </p>
+                                <p>
+                                    <strong>المدينة:</strong>
+                                    <t t-esc="doc.city"/>
+                                </p>
+                                <p>
+                                    <strong>الحى:</strong>
+                                    <t t-esc="doc.neighborhood"/>
+                                </p>
+                                <p>
+                                    <strong>الشارع:</strong>
+                                    <t t-esc="doc.street"/>
+                                </p>
+                                <p>
+                                    <strong>وحدة الجوار:</strong>
+                                    <t t-esc="doc.subunit"/>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- بيانات التواصل -->
+                        <div>
+                            <h4 style="background-color: #f1f1f1; padding: 8px; margin-bottom: 10px;">بيانات التواصل
+                            </h4>
+                            <div style="display: flex; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 200px; padding: 0 10px;">
+                                    <p>
+                                        <strong>الهاتف الثابت:</strong>
+                                        <t t-esc="doc.phone"/>
+                                    </p>
+                                </div>
+                                <div style="flex: 1; min-width: 200px; padding: 0 10px;">
+                                    <p>
+                                        <strong>الهاتف الجوال:</strong>
+                                        <t t-esc="doc.mobile"/>
+                                    </p>
+                                </div>
+                                <div style="flex: 1; min-width: 200px; padding: 0 10px;">
+                                    <p>
+                                        <strong>البريد الإلكتروني:</strong>
+                                        <t t-esc="doc.email"/>
+                                    </p>
+                                </div>
+                                <div style="flex: 1; min-width: 200px; padding: 0 10px;">
+                                    <p>
+                                        <strong>الموقع الإلكتروني:</strong>
+                                        <t t-esc="doc.website"/>
+                                    </p>
+                                </div>
+                                <div style="flex: 1; min-width: 200px; padding: 0 10px;">
+                                    <p>
+                                        <strong>ص.ب:</strong>
+                                        <t t-esc="doc.po_box"/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- القسم 4: التوقيع -->
+                <div class="signature-section" style="margin-top: 50px;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="width: 45%;">
+                            <p>
+                                <strong>اسم مقدم الطلب:</strong>
+                                <t t-esc="doc.investor_name or ''"/>
+                            </p>
+                            <p>
+                                <strong>الصفة:</strong>
+                            </p>
+                        </div>
+                        <div style="width: 45%; text-align: center;">
+                            <p style="margin-bottom: 60px;">التوقيع: ________________</p>
+                            <p>التاريخ:
+                                <t t-esc="doc.request_date"/>
+                            </p>
+                            <p>الختم</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- تذييل الصفحة -->
+                <div class="footer"
+                     style="margin-top: 50px; text-align: center; font-size: 12px; color: #666; border-top: 1px solid #ddd; padding-top: 10px;">
+                    <p>جميع الحقوق محفوظة © -
+                        <t t-esc="doc.create_date.year"/>
+                    </p>
+                    <p>هذا النموذج مخصص لتقديم طلبات الفرص الاستثمارية وفق اللوائح والأنظمة المعمول بها</p>
+                </div>
+            </t>
+        </t>
+
+    </template>
+</odoo>

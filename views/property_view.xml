@@ -1,0 +1,96 @@
+<odoo>
+    <record id="property_view_search" model="ir.ui.view">
+        <field name="name">property search</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="username" filter_domain="['|', ('username', 'ilike', self), ('age',
+                        'ilike', self)]" string="Property"/>
+                <filter name="is_yemeni" string="IsYemeni" domain="[('is_yemeni', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_state" string="State" context="{'group_by':'state'}"/>
+                </group>
+                <searchpanel>
+                    <field name="state" select="multi" string="Categories" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+    <record id="property_view_tree" model="ir.ui.view">
+        <field name="name">property tree</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="username"/>
+                <field name="age"/>
+                <field name="birth_date"/>
+                <field name="is_yemeni"/>
+                <field name="price"/>
+                <field name="tax"/>
+                <field name="price_tax"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record id="property_view_form" model="ir.ui.view">
+        <field name="name">property form</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <headre>
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-around gap-2">
+                                <button name="confirm_action" string="Confirm" groups="base.group_erp_manager" type="object" class="btn-primary"/>
+                                <button name="action_confirm_test" string="Print" type="object" class="btn-primary"/>
+                                <button name="decorated_function" string="Decorated" type="object" class="btn-primary"/>
+                            </div>
+                            <field name="state" widget="statusbar"/>
+                        </div>
+                    </headre>
+                    <group>
+                        <group string="Info">
+                            <field name="username"/>
+                            <field name="is_yemeni"/>
+                            <field name="birth_date"/>
+                            <div class="oe_title">
+                                <label for="age" string="Age"/>
+                                <h4>
+                                    <field name="age" nolabel="1"/>
+                                </h4>
+                            </div>
+                        </group>
+                        <group string="Salary">
+                            <field name="price"/>
+                            <field name="tax"/>
+                            <field name="price_tax"/>
+                        </group>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="property_action" model="ir.actions.act_window">
+        <field name="name">Property</field>
+        <field name="res_model">property</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="context">{'search_default_is_yemeni':1,'default_is_yemeni':True,'search_default_group_by_state':1
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                No module found!
+            </p>
+            <p>
+                You should try other search criteria.
+            </p>
+        </field>
+    </record>
+    <menuitem
+            id="menu_item"
+            name="Properties"
+            parent="property_menu"
+            action="property_action"
+    />
+</odoo>

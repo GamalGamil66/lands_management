@@ -1,0 +1,93 @@
+<odoo>
+    <record id="investment_review_action" model="ir.actions.act_window">
+        <field name="name">مراجعة فرص الاستثمار</field>
+        <field name="res_model">lm.investment_review</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="investment_review_view_tree" model="ir.ui.view">
+        <field name="name">investment review tree</field>
+        <field name="model">lm.investment_review</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="investment_id"/>
+                <field name="review_date"/>
+                <field name="review_no"/>
+                <field name="final_recommendation"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="investment_review_view_form" model="ir.ui.view">
+        <field name="name">investment review form</field>
+        <field name="model">lm.investment_review</field>
+        <field name="arch" type="xml">
+            <form>
+    <sheet>
+        <group col="2">
+            <field name="investment_id"/>
+            <field name="review_date"/>
+            <field name="review_no"/>
+            <field name="final_recommendation"/>
+        </group>
+        <notebook>
+            <page string="عناصر المراجعة">
+                <separator string="عناصر المراجعة"/>
+                <field name="review_items">
+                    <tree string="Review Items" editable="bottom">
+                        <field name="name"/>
+                        <field name="result"/>
+                    </tree>
+                </field>
+            </page>
+            <page string="القبول / الرفض">
+                <group invisible="final_recommendation != 'final_approve'">
+                    <separator string="شروط قبول المراجعة"/>
+                    <field name="review_accept_conditions" string="" widget="one2many_list">
+                        <tree string="" editable="bottom">
+                            <field name="name"/>
+                        </tree>
+                    </field>
+                </group>
+                <group invisible="final_recommendation != 'final_reject'">
+                    <separator string="أسباب رفض المراجعة"/>
+                    <field name="review_reject_reasons" string="" widget="one2many_list">
+                        <tree string="" editable="bottom">
+                            <field name="name"/>
+                        </tree>
+                    </field>
+                </group>
+            </page>
+            <page string="طلبات توضيح المستثمر">
+                <separator string="طلبات توضيح المستثمر"/>
+                <field name="investor_clarification_requests" string="" widget="one2many_list">
+                    <tree string="" editable="bottom">
+                            <field name="name"/>
+                            <field name="justification"/>
+                        </tree>
+                    </field>
+                </page>
+                <page string="فريق المراجعة">
+                    <separator string="فريق المراجعة"/>
+            <field name="review_team" widget="one2many_list">
+            <tree string="Review Team" editable="bottom">
+                <field name="name"/>
+                <field name="characteristic"/>
+                <field name="signature_date"/>
+                <field name="signature" widget="signature"/>
+            </tree>
+        </field>
+    </page>
+</notebook>
+</sheet>
+</form>
+        </field>
+    </record>
+    
+    <menuitem
+            id="investment_review_menu"
+            name="مراجعة فرص الاستثمار"
+            parent="main_investment_menu"
+            action="investment_review_action"
+    />
+</odoo>

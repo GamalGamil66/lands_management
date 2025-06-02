@@ -1,0 +1,160 @@
+<odoo>
+    <record id="investment_request_action" model="ir.actions.act_window">
+        <field name="name">طلبات الاستثمار</field>
+        <field name="res_model">lm.investment_request</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="investment_request_view_tree" model="ir.ui.view">
+        <field name="name">investment request tree</field>
+        <field name="model">lm.investment_request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="request_date"/>
+                <field name="investment_name"/>
+                <field name="investor_name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="investment_request_view_form" model="ir.ui.view">
+        <field name="name">investment request form</field>
+        <field name="model">lm.investment_request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" invisible="state !='draft'" type="object" string="تأكيد" class="oe_highlight"/>
+                    <button name="cans_confirm" invisible="state =='draft'" type="object" string="الغاء" class="btn_primary"/>
+                    <button name="action_first_review" invisible="0" type="object" string="تجهيز محضر تسليم اولي"
+                            class="oe_highlight"/>
+                    <button name="action_first_submit" invisible="0" type="object" string="معاينة المحضر"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,first_reviewed,first_submitted,second_reviewed,contracted,cancelled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="investment_name" placeholder="اسم الفرصة الاستثمارية"/>
+                        </h1>
+                    </div>
+                    <group string="بيانات المستثمر">
+                        <group>
+                            <field name="investor_name"/>
+                            <field name="legal_form"/>
+                            <field name="nationality"/>
+                            <field name="commercial_reg"/>
+                            <field name="id_number"/>
+                            <field name="address"/>
+                        </group>
+                        <group>
+                            <field name="phone"/>
+                            <field name="mobile"/>
+                            <field name="email"/>
+                            <field name="website"/>
+                            <field name="po_box"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <group string="بيانات الفرصة">
+                            <field name="activity_classification"/>
+                            <field name="main_sector_id"/>
+                            <field name="sub_sector_id"/>
+                            <field name="description"/>
+                        </group>
+                        <group string="بيانات الموقع">
+                            <field name="governorate"/>
+                            <field name="district"/>
+                            <field name="city"/>
+                            <field name="neighborhood"/>
+                            <field name="street"/>
+                            <field name="subunit"/>
+                            <field name="x_coordinates"/>
+                            <field name="y_coordinates"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <group string="المؤشرات المالية">
+                            <field name="investment_cost"/>
+                            <field name="equipment_value"/>
+                            <field name="financials_currency_id"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="المنتجات / الخدمات">
+                            <field name="product_ids">
+                                <tree editable="bottom">
+                                    <field name="product_name"/>
+                                    <field name="unit"/>
+                                    <field name="capacity"/>
+                                    <field name="notes"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="استخدام الأرض">
+                            <field name="land_usage_ids">
+                                <tree editable="bottom">
+                                    <field name="use_type"/>
+                                    <field name="area_m2"/>
+                                    <field name="note"/>
+                                </tree>
+                            </field>
+                            <group class="oe_right">
+                                <div class="o_td_label">
+                                    <label for="lands_area_space" string="اجمالي استخدام الارض"/>
+                                    <field name="lands_area_space" nolabel="1" class="oe_inline"/>
+                                </div>
+                            </group>
+                        </page>
+                        <page string="مصادر التمويل">
+                            <field name="funding_sources_ids">
+                                <tree editable="bottom">
+                                    <field name="funding_type"/>
+                                    <field name="local_amount"/>
+                                    <field name="foreign_amount"/>
+                                    <field name="currency_id"/>
+                                    <field name="subtotal"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="العمالة">
+                            <field name="labor_ids">
+                                <tree editable="bottom">
+                                    <field name="type"/>
+                                    <field name="category"/>
+                                    <field name="count"/>
+                                    <field name="specialization"/>
+                                    <field name="nationality"/>
+                                    <field name="duration"/>
+                                    <field name="notes"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="الفترة الزمنية">
+                            <field name="time_line_ids">
+                                <tree editable="bottom">
+                                    <field name="task_name"/>
+                                    <field name="duration_days"/>
+                                    <field name="note"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <menuitem
+        id="investment_request_menu"
+        name="طلبات الاستثمار"
+        parent="main_investment_request_menu"
+        action="investment_request_action"/>
+</odoo>

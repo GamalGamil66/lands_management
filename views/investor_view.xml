@@ -1,0 +1,89 @@
+<odoo>
+    <record id="investor_view_form" model="ir.ui.view">
+        <field name="name">investor form</field>
+        <field name="model">lm.investor</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="Info">
+                            <field name="investor_name"/>
+                            <field name="legal_form"/>
+                            <field name="nationality"/>
+                            <field name="commercial_reg"/>
+                            <field name="id_number"/>
+                            <field name="address"/>
+                        </group>
+                        <group string="Registered Company">
+                            <field name="phone"/>
+                            <field name="mobile"/>
+                            <field name="email"/>
+                            <field name="website"/>
+                            <field name="po_box"/>
+                        </group>
+                        <h2>Registered Company</h2>
+                        <field name="registered_company_ids">
+                                <tree string="Installments" editable="bottom">
+                                    <field name="company_name"/>
+                                    <field name="legal_form"/>
+                                    <field name="reg_number"/>
+                                    <field name="reg_date"/>
+                                    <field name="nationality"/>
+                                    <field name="activity"/>
+                                    <field name="location"/>
+                                    <field name="contact_name"/>
+                                    <field name="role"/>
+                                    <field name="phones"/>
+                                    <field name="email"/>
+                                </tree>
+                            </field>
+                            <h2>Authorized Agent</h2>
+                            <field name="company_authorized_agent_ids">
+                                <tree string="Installments" editable="bottom">
+                                    <field name="agent_name"/>
+                                    <field name="authorization_type"/>
+                                    <field name="phones"/>
+                                    <field name="email"/>
+                                </tree>
+                            </field>
+                            <!-- <field name="registered_company_ids" widget="one2many_list"/>
+                            <field name="company_authorized_agent_ids" widget="one2many_list"/> -->
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>    
+    
+    <record id="investor_action" model="ir.actions.act_window">
+        <field name="name">المستثمرين</field>
+        <field name="res_model">lm.investor</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem
+            id="investor_menu"
+            name="المستثمرين"
+            parent="main_investor_menu"
+            action="investor_action"
+    />
+
+    <record id="investor_view_tree" model="ir.ui.view">
+        <field name="name">investor tree</field>
+        <field name="model">lm.investor</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="investor_name"/>
+                <field name="legal_form"/>
+                <field name="nationality"/>
+                <field name="commercial_reg"/>
+                <field name="id_number"/>
+                <field name="address"/>
+                <field name="phone"/>
+                <field name="mobile"/>
+                <field name="email"/>
+                <field name="website"/>
+                <field name="po_box"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,150 @@
+<odoo>
+    <record id="investment_view_form" model="ir.ui.view">
+        <field name="name">investment form</field>
+        <field name="model">lm.investment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,reviewed,approved"/>
+                </header>
+                <sheet>
+                    <!--                    <group>-->
+                    <group>
+                        <group string="بيانات الفرصة">
+                            <field name="name"/>
+                            <field name="activity_classification"/>
+                            <field name="main_sector_id"/>
+                            <field name="sub_sector_id"/>
+                            <field name="description"/>
+                            <!--<field name="lands_area_space"/>-->
+                        </group>
+
+                        <!-- <field name="state"/> -->
+                        <group string="بيانات الموقع">
+                            <field name="governorate"/>
+                            <field name="district"/>
+                            <field name="city"/>
+                            <field name="neighborhood"/>
+                            <field name="street"/>
+                            <field name="subunit"/>
+                            <field name="x_coordinates"/>
+                            <field name="y_coordinates"/>
+                        </group>
+                    <!--                    </group>-->
+<!--                </sheet>-->
+<!--                <sheet>-->
+
+                    <group string="المؤشرات المالية">
+                        <field name="investment_cost"/>
+                        <field name="equipment_value"/>
+                        <field name="financials_currency_id"/>
+                    </group>
+<!--                </sheet>-->
+<!--                <sheet>-->
+                    </group>
+                    <notebook>
+                        <page string="المنتجات / الخدمات">
+                            <field name="product_ids">
+                                <tree string="Products" editable="bottom">
+                                    <field name="product_name"/>
+                                    <field name="unit"/>
+                                    <field name="capacity"/>
+                                    <field name="notes"/>
+                                </tree>
+                            </field>
+
+                        </page>
+                        <page string="استخدام الأرض">
+                            <field name="land_usage_ids">
+                                <tree string="Land Usage" editable="bottom">
+                                    <field name="use_type"/>
+                                    <field name="area_m2"/>
+                                    <field name="note"/>
+                                </tree>
+                            </field>
+
+                            <div class="oe_title d-flex justify-content-end">
+                                <label for="lands_area_space" string="اجمالي استخدام الارض"/>
+                                <h4 class="mx-2">
+                                    <field name="lands_area_space"/>
+                                </h4>
+                            </div>
+                        </page>
+                        <!--                                <page string="مصادر التمويل">-->
+                        <!--                                    <field name="funding_sources_ids">-->
+                        <!--                                        <tree string="Funding Sources" editable="bottom">-->
+                        <!--                                            <field name="funding_type"/>-->
+                        <!--                                            <field name="local_amount"/>-->
+                        <!--                                            <field name="foreign_amount"/>-->
+                        <!--                                            <field name="currency_id"/>-->
+                        <!--                                            <field name="subtotal"/>-->
+                        <!--                                        </tree>-->
+                        <!--                                    </field>-->
+                        <!--                                </page>-->
+                        <page string="العمالة">
+                            <field name="labor_ids">
+                                <tree list="one2many_list" limit="5" string="Labor" editable="bottom">
+                                    <field name="type"/>
+                                    <field name="category"/>
+                                    <field name="count"/>
+                                    <field name="specialization"/>
+                                    <field name="nationality"/>
+                                    <field name="duration"/>
+                                    <field name="notes"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="الفترة الزمنية">
+                            <field name="time_line_ids">
+                                <tree string="Timeline" editable="bottom">
+                                    <field name="task_name"/>
+                                    <field name="duration_days"/>
+                                    <field name="note"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <!-- <field name="img_attachment_ids" widget="many2many_binary"/> -->
+
+            </form>
+        </field>
+    </record>
+
+    <record id="investment_action" model="ir.actions.act_window">
+        <field name="name">فرص الاستثمار</field>
+        <field name="res_model">lm.investment</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="investment_menu"
+            name="فرص الاستثمار"
+            parent="main_investment_menu"
+            action="investment_action"
+    />
+
+    <record id="investment_view_tree" model="ir.ui.view">
+        <field name="name">investment tree</field>
+        <field name="model">lm.investment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="activity_classification"/>
+                <field name="main_sector_id"/>
+                <field name="sub_sector_id"/>
+                <!-- <field name="state"/>
+                <field name="governorate"/>
+                <field name="district"/>
+                <field name="city"/>
+                <field name="neighborhood"/>
+                <field name="street"/>
+                <field name="subunit"/>
+                <field name="x_coordinates"/>
+                <field name="y_coordinates"/>
+                <field name="product_ids"/> -->
+            </tree>
+        </field>
+    </record>
+</odoo>

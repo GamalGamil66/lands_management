@@ -1,0 +1,27 @@
+<odoo>
+    <menuitem
+        id="root_menu"
+        name="الهيئة العامة للاراضي"
+    />
+    <menuitem
+        id="main_investment_menu"
+        name="الفرص الاستثمارية"
+        parent="root_menu"
+    />
+    <menuitem
+        id="main_investor_menu"
+        name="المستثمرين"
+        parent="root_menu"
+    />
+    <menuitem
+        id="main_investment_request_menu"
+        name="طلبات الاستثمار"
+        parent="root_menu"
+    />
+    <menuitem
+        id="preparation_menu"
+        name="التهيئة"
+        parent="root_menu"
+        sequence="550"
+    />
+</odoo>

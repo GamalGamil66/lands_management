@@ -1,0 +1,55 @@
+<odoo>
+    <record id="main_sector_action" model="ir.actions.act_window">
+        <field name="name">القطاع الرئيسي</field>
+        <field name="res_model">lm.main_sector</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="main_sector_view_form" model="ir.ui.view">
+        <field name="name">main sector form</field>
+        <field name="model">lm.main_sector</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <menuitem
+            id="main_sector_menu"
+            name="القطاع الرئيسي"
+            parent="preparation_menu"
+            action="main_sector_action"
+    />
+
+    <record id="sub_sector_action" model="ir.actions.act_window">
+        <field name="name">القطاع الفرعي</field>
+        <field name="res_model">lm.sub_sector</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="sub_sector_view_form" model="ir.ui.view">
+        <field name="name">sub sector form</field>
+        <field name="model">lm.sub_sector</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="main_sector_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <menuitem
+            id="sub_sector_menu"
+            name="القطاع الفرعي"
+            parent="preparation_menu"
+            action="sub_sector_action"
+    />
+
+</odoo>
