@@ -18,3 +18,15 @@ access_company_authorized_agent_attachment,access_company_authorized_agent_attac
 access_main_sector,access_main_sector,model_lm_main_sector,,1,1,1,1
 access_sub_sector,access_sub_sector,model_lm_sub_sector,,1,1,1,1
 access_investment_requestr,access_investment_requestr,model_lm_investment_request,,1,1,1,1
+access_project_detailed_activity_line,access_project_detailed_activity_line,model_project_detailed_activity_line,,1,1,1,1
+access_lm_evaluation_report_user,lm.evaluation_report.user,model_lm_evaluation_report,base.group_user,1,1,1,1
+access_project_detailed_activity_line_user,project.detailed.activity.line.user,model_project_detailed_activity_line,base.group_user,1,1,1,1
+access_project_followup_report_user,project.followup.report.user,model_project_followup_report,base.group_user,1,1,1,1
+access_project_followup_task_evaluation_user,project.followup.task.evaluation.user,model_project_followup_task_evaluation,base.group_user,1,1,1,1
+access_lm_evaluation_report_user,lm.evaluation_report.user,model_lm_evaluation_report,base.group_user,1,1,1,1
+access_project_detailed_activity_line_user,project.detailed.activity.line.user,model_project_detailed_activity_line,base.group_user,1,1,1,1
+access_lm_contract_user,lm.contract.user,model_lm_contract,base.group_user,1,1,1,1
+access_project_implementation_phase_data_user,project.implementation.phase.data.user,model_project_implementation_phase_data,base.group_user,1,1,1,1
+access_lm_delivery_report_user,lm.delivery_report.user,model_lm_delivery_report,base.group_user,1,1,1,1
+access_lm_preparatory_task_user,lm.preparatory_task.user,model_lm_preparatory_task,base.group_user,1,1,1,1
+access_land_request_review_user,land.request.review.user,model_land_request_review,base.group_user,1,1,1,1

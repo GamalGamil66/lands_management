@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="lm_evaluation_report_view_form" model="ir.ui.view">
+        <field name="name">lm.evaluation_report.form</field>
+        <field name="model">lm.evaluation_report</field>
+        <field name="arch" type="xml">
+            <form string="تقرير متابعة">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="مثال: تقرير متابعة الربع الأول..."/>
+                        </h1>
+                    </div>
+                    <notebook>
+                        <page string="بنود التقييم" name="evaluation_lines">
+                            <field name="project_detailed_activity_line_ids">
+                                <tree string="بنود تقييم النشاط" editable="bottom">
+                                    <field name="activity_type"/>
+                                    <field name="current_execution_level"/>
+                                    <field name="notes"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="lm_evaluation_report_view_tree" model="ir.ui.view">
+        <field name="name">lm.evaluation_report.tree</field>
+        <field name="model">lm.evaluation_report</field>
+        <field name="arch" type="xml">
+            <tree string="تقارير المتابعة">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="lm_evaluation_report_view_search" model="ir.ui.view">
+        <field name="name">lm.evaluation_report.search</field>
+        <field name="model">lm.evaluation_report</field>
+        <field name="arch" type="xml">
+            <search string="بحث في تقارير المتابعة">
+                <field name="name" string="بحث بالاسم"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="lm_evaluation_report_action" model="ir.actions.act_window">
+        <field name="name">تقارير المتابعة</field>
+        <field name="res_model">lm.evaluation_report</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                لا توجد تقارير متابعة حتى الآن. انقر لإنشاء واحدة!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="lm_evaluation_main_menu"
+              name="التقييم والمتابعة"
+              parent="root_menu"
+              sequence="15"/>
+
+    <menuitem id="lm_evaluation_report_menu"
+              name="تقارير المتابعة"
+              parent="lm_evaluation_main_menu"
+              action="lm_evaluation_report_action"
+              sequence="10"/>
+
+</odoo>

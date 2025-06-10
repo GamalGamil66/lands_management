@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="usufruct_contract_view_form" model="ir.ui.view">
+        <field name="name">lm.contract.form</field>
+        <field name="model">lm.contract</field> <field name="arch" type="xml">
+            <form string="عقد انتفاع">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="اسم العقد أو الرقم المرجعي..."/>
+                        </h1>
+                    </div>
+                    <notebook>
+                        <page string="مراحل التنفيذ" name="implementation_phases">
+                            <field name="project_implementation_phase_ids">
+                                <tree string="مراحل التنفيذ" editable="bottom">
+                                    <field name="project_or_certificate_ref"/>
+                                    <field name="phase_sequence"/>
+                                    <field name="implementation_start_date"/>
+                                    <field name="implementation_completion_date"/>
+                                    <field name="commercial_activity_start_date"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="usufruct_contract_view_tree" model="ir.ui.view">
+        <field name="name">lm.contract.tree</field>
+        <field name="model">lm.contract</field> <field name="arch" type="xml">
+            <tree string="عقود الانتفاع">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="usufruct_contract_view_search" model="ir.ui.view">
+        <field name="name">lm.contract.search</field>
+        <field name="model">lm.contract</field> <field name="arch" type="xml">
+            <search string="بحث في عقود الانتفاع">
+                <field name="name" string="بحث بالاسم"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="usufruct_contract_action" model="ir.actions.act_window">
+        <field name="name">عقود الانتفاع</field>
+        <field name="res_model">lm.contract</field> <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                لا توجد عقود انتفاع حتى الآن. انقر لإنشاء عقد جديد!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="contract_management_root_menu"
+              name="إدارة العقود"
+              parent="root_menu"
+              sequence="25"/>
+
+    <menuitem id="usufruct_contract_menu"
+              name="عقود الانتفاع"
+              parent="contract_management_root_menu"
+              action="usufruct_contract_action"
+              sequence="10"/>
+
+</odoo>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Form View for project.followup.report -->
+    <record id="project_followup_report_view_form" model="ir.ui.view">
+        <field name="name">project.followup.report.form</field>
+        <field name="model">project.followup.report</field>
+        <field name="arch" type="xml">
+            <form string="تقرير متابعة مشروع">
+                <sheet>
+                    <div class="oe_title">
+                        <!-- Add a 'name' Char field to your python model for this to work -->
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="مثال: تقرير متابعة المشروع الفلاني للربع الأول"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                             <field name="report_date"/>
+                        </group>
+                        <group/>
+                    </group>
+
+                    <notebook>
+                        <page string="تقييم مستوى التنفيذ للأعمال" name="task_evaluation">
+                            <field name="task_evaluation_ids">
+                                <tree string="تقييمات الأعمال" editable="bottom">
+                                    <field name="statement"/>
+                                    <field name="specified_time"/>
+                                    <field name="execution_level"/>
+                                    <field name="notes"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="نتائج التقييم الأساسية" name="basic_evaluation">
+                            <group>
+                                <field name="eval_committed_on_time"/>
+                                <field name="eval_relatively_committed"/>
+                                <field name="eval_late"/>
+                                <field name="eval_no_work_done"/>
+                                <field name="eval_deviation_percentage"/>
+                            </group>
+                        </page>
+
+                        <page string="النتائج الأخرى والتوصيات" name="other_results_recommendations">
+                             <group>
+                                <field name="other_evaluation_results" widget="html" string="النتائج التقييم الأخرى"/>
+                                <separator/>
+                                <field name="recommendations" widget="html" string="التوصيات"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree (List) View for project.followup.report -->
+    <record id="project_followup_report_view_tree" model="ir.ui.view">
+        <field name="name">project.followup.report.tree</field>
+        <field name="model">project.followup.report</field>
+        <field name="arch" type="xml">
+            <tree string="تقارير متابعة المشاريع">
+                <!-- Add a 'name' Char field to your python model for this column -->
+                <field name="name"/>
+                <field name="report_date"/>
+                <field name="eval_late" optional="show"/>
+                <field name="eval_no_work_done" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View for project.followup.report -->
+    <record id="project_followup_report_view_search" model="ir.ui.view">
+        <field name="name">project.followup.report.search</field>
+        <field name="model">project.followup.report</field>
+        <field name="arch" type="xml">
+            <search string="بحث في تقارير المتابعة">
+                <!-- Add a 'name' Char field to your python model for this to work -->
+                <field name="name" string="بحث بالعنوان"/>
+                <filter string="متأخر" name="filter_is_late" domain="[('eval_late', '=', True)]"/>
+                <filter string="لم يتم التنفيذ" name="filter_no_work" domain="[('eval_no_work_done', '=', True)]"/>
+                <group expand="0" string="تجميع حسب">
+                    <filter string="تاريخ التقرير" name="group_by_report_date" context="{'group_by': 'report_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record id="project_followup_report_action" model="ir.actions.act_window">
+        <field name="name">تقارير متابعة المشاريع</field>
+        <field name="res_model">project.followup.report</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                لا توجد تقارير متابعة. قم بإنشاء تقرير جديد الآن.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Items -->
+    <menuitem id="project_followup_root_menu"
+              name="متابعة المشاريع"
+              parent="root_menu"
+              sequence="20"/>
+
+    <menuitem id="project_followup_report_menu"
+              name="تقارير المتابعة"
+              parent="project_followup_root_menu"
+              action="project_followup_report_action"
+              sequence="10"/>
+
+</odoo>

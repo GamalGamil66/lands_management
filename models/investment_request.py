@@ -88,4 +88,5 @@ class InvestmentRequest(models.Model):
     def action_first_review(self):
         print("dd")
     def action_first_submit(self):
-        print("dd")
+        #open report
+        return self.env.ref('lands_management.action_print_investment_request').report_action(self)

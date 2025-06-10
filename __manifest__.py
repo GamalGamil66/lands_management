@@ -1,7 +1,7 @@
 {
     'name': "Lands Management",
     'version': '1.0',
-    'depends': ['base','mail'],
+    'depends': ['base','mail','web'],
     'author': "Gamal",
     'category': '',
     'data': [
@@ -13,6 +13,12 @@
         'views/investment_review_view.xml',
         'views/investment_request_view.xml',
         'reports/report_investment_request.xml',
+        'data/land_request_review.xml',
+        'views/land_request_review.xml',
+        'views/Contract.xml',
+        'views/FollowupReport.xml',
+        'views/EvaluationReport.xml',
+        'views/DeliveryReport.xml',
     ],
     'application': True
 }

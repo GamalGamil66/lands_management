@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_land_request_review_form" model="ir.ui.view">
+            <field name="name">land.request.review.form</field>
+            <field name="model">land.request.review</field>
+            <field name="arch" type="xml">
+                <form string="مراجعة طلب تخصيص أرض">
+                    <sheet>
+                    <header>
+                        <!-- Workflow Buttons -->
+                        <button name="action_submit_for_review" string="إرسال للمراجعة" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                        <button name="action_set_opinion" string="تحديد الرأي" type="object" class="oe_highlight" invisible="state != 'under_review'"/>
+                        <button name="action_proceed_after_opinion" string="متابعة بعد تحديد الرأي" type="object" class="oe_highlight" invisible="state != 'opinion_reached'"/>
+                        <button name="action_complete" string="إكمال" type="object" class="oe_highlight" invisible="state not in ['filed', 'referred_gia', 'referred_survey']"/>
+                        <button name="action_reset_to_draft" string="إعادة إلى مسودة" type="object" invisible="state not in ['under_review', 'opinion_reached', 'filed', 'referred_gia', 'referred_survey', 'completed']" confirm="هل أنت متأكد أنك تريد إعادة هذه المراجعة إلى مسودة؟"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,under_review,opinion_reached,referred_gia,referred_survey,filed,completed"/>
+                    </header>
+                    <!-- <sheet> -->
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group id="group_left">
+                                <field name="applicant_id" options="{'no_create_edit': True}"/>
+                                <!-- <field name="branch_id" options="{'no_create_edit': True}"/> -->
+                                <field name="submission_date" readonly="1"/>
+                            </group>
+                            <group id="group_right">
+                                <field name="review_form_type" readonly="1"/>
+                                <field name="reviewed_request_ref"/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="تفاصيل الطلب والتوجيهات" name="request_directives">
+                                <group>
+                                    <field name="request_summary" colspan="4"/>
+                                </group>
+                                <separator string="توجيهات السلطة العليا"/>
+                                <group>
+                                    <group>
+                                        <field name="higher_authority_directive_source"/>
+                                        <field name="higher_authority_directive_number"/>
+                                    </group>
+                                    <group>
+                                        <field name="higher_authority_directive_date"/>
+                                    </group>
+                                </group>
+                                <separator string="توجيهات رئيس الهيئة"/>
+                                <group>
+                                     <group>
+                                        <field name="hoa_directive_number"/>
+                                        <field name="hoa_directive_stipulation" colspan="1"/>
+                                     </group>
+                                     <group>
+                                        <field name="hoa_directive_date"/>
+                                     </group>
+                                </group>
+                            </page>
+
+                            <page string="دراسة هيئة الاستثمار والوثائق" name="gia_study_documents">
+                                <separator string="دراسة سابقة من الهيئة العامة للاستثمار"/>
+                                <group>
+                                    <field name="gia_prior_study_notes" colspan="4"/>
+                                    <group>
+                                        <field name="gia_license_decision_number"/>
+                                        <field name="gia_land_opinion_request_number"/>
+                                    </group>
+                                    <group>
+                                        <field name="gia_license_decision_date"/>
+                                        <field name="gia_land_opinion_request_date"/>
+                                    </group>
+                                </group>
+                                <separator string="الوثائق وحالة المواقع السابقة"/>
+                                <group>
+                                    <field name="missing_documents_details" colspan="4"/>
+                                    <field name="previous_sites_status" colspan="4"/>
+                                </group>
+                            </page>
+
+                            <page string="رأي المراجعة والإجراء" name="review_opinion_action">
+                                <group>
+                                    <field name="review_action" widget="radio" options="{'horizontal': true}"/>
+                                </group>
+                                <group invisible="review_action != 'file_request'">
+                                    <separator string="أسباب حفظ/رفض الطلب"/>
+                                    <field name="file_request_reasons" nolabel="1" colspan="4"/>
+                                </group>
+                                <group>
+                                    <field name="action_report_recipient" colspan="4"/>
+                                </group>
+
+                                <group string="تفاصيل الإحالة إلى الهيئة العامة للاستثمار" name="gia_referral_details" 
+                                       invisible="review_action != 'refer_gia'">
+                                    <field name="gia_referral_purpose" colspan="4"/>
+                                    <field name="gia_inter_authority_agreement_date"/>
+                                </group>
+
+                                <group string="تفاصيل الإحالة إلى إدارة المساحة" name="survey_referral_details"
+                                       invisible="review_action != 'refer_survey_dept'">
+                                    <!-- <field name="survey_dept_referral_purpose_template" colspan="4" readonly="1" force_save="1"/> -->
+                                    <field name="survey_dept_requested_area_sqm"/>
+                                    <field name="survey_dept_gia_opinion_req_num"/>
+                                    <field name="survey_dept_gia_opinion_req_date"/>
+                                    <field name="survey_dept_hoa_referral_note_num"/>
+                                    <field name="survey_dept_hoa_referral_note_date"/>
+                                    <field name="survey_dept_inter_authority_agreement_date"/>
+                                </group>
+                            </page>
+                            
+                            <page string="الموقعون" name="signatories">
+                                <group>
+                                    <group>
+                                        <field name="specialist_id" options="{'no_create_edit': True}"/>
+                                        <field name="specialist_signature_date"/>
+                                    </group>
+                                    <group>
+                                        <field name="investment_director_id" options="{'no_create_edit': True}"/>
+                                        <field name="investment_director_signature_date"/>
+                                    </group>
+                                </group>
+                            </page>
+                             <!-- <page string="ملاحظات داخلية" name="internal_notes">
+                                 <field name="message_ids" widget="mail_thread"/>
+                                 <field name="activity_ids" widget="mail_activity"/>
+                             </page> -->
+                        </notebook>
+                    </sheet>
+                     <div class="oe_chatter">
+                         <field name="message_follower_ids" widget="mail_followers"/>
+                         <field name="message_ids" widget="mail_thread"/>
+                         <field name="activity_ids" widget="mail_activity"/>
+                     </div>
+                
+                    <!-- </sheet> -->
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree (List) View -->
+        <record id="view_land_request_review_tree" model="ir.ui.view">
+            <field name="name">land.request.review.tree</field>
+            <field name="model">land.request.review</field>
+            <field name="arch" type="xml">
+                <tree string="مراجعات طلبات الأراضي">
+                    <field name="name"/>
+                    <field name="applicant_id"/>
+                    <!-- <field name="branch_id"/> -->
+                    <field name="submission_date"/>
+                    <field name="review_action"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_land_request_review_search" model="ir.ui.view">
+            <field name="name">land.request.review.search</field>
+            <field name="model">land.request.review</field>
+            <field name="arch" type="xml">
+                <search string="بحث في مراجعات طلبات الأراضي">
+                    <field name="name" string="المرجع"/>
+                    <field name="applicant_id"/>
+                    <!-- <field name="branch_id"/> -->
+                    <field name="reviewed_request_ref"/>
+                    <separator/>
+                    <filter string="مسودة" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="قيد المراجعة" name="under_review" domain="[('state', '=', 'under_review')]"/>
+                    <filter string="تم التوصل إلى رأي" name="opinion_reached" domain="[('state', '=', 'opinion_reached')]"/>
+                    <filter string="محال لهيئة الاستثمار" name="referred_gia" domain="[('state', '=', 'referred_gia')]"/>
+                    <filter string="محال لإدارة المساحة" name="referred_survey" domain="[('state', '=', 'referred_survey')]"/>
+                    <filter string="محفوظ/مرفوض" name="filed" domain="[('state', '=', 'filed')]"/>
+                    <group expand="0" string="تجميع حسب...">
+                        <filter string="الحالة" name="group_by_state" context="{'group_by': 'state'}"/>
+                        <!-- <filter string="فرع الهيئة" name="group_by_branch" context="{'group_by': 'branch_id'}"/> -->
+                        <filter string="مقدم الطلب" name="group_by_applicant" context="{'group_by': 'applicant_id'}"/>
+                        <filter string="إجراء المراجعة" name="group_by_review_action" context="{'group_by': 'review_action'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action Window -->
+        <record id="action_land_request_review" model="ir.actions.act_window">
+            <field name="name">مراجعات طلبات تخصيص الأراضي</field>
+            <field name="res_model">land.request.review</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_land_request_review_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    لا توجد مراجعات طلبات أراضي حتى الآن. قم بإنشاء واحدة!
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu Item (Example: under a root menu for Land Management) -->
+        <!-- You would need to define a root menu first, e.g., menu_land_management_root -->
+        <!-- 
+        <menuitem id="menu_land_management_root" name="إدارة الأراضي" sequence="10"/>
+        <menuitem id="menu_land_request_reviews_main" name="طلبات الأراضي" parent="menu_land_management_root" sequence="1"/>
+        <menuitem id="menu_land_request_review_item" name="مراجعات الطلبات" action="action_land_request_review" parent="menu_land_request_reviews_main" sequence="10"/>
+        -->
+        
+        <menuitem id="menu_land_request_review_item" name="مراجعات الطلبات" action="action_land_request_review" parent="main_land_request_review_menu" sequence="10"/>
+    </data>
+</odoo>

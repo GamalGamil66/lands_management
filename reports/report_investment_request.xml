@@ -3,7 +3,7 @@
     <record id="action_print_investment_request" model="ir.actions.report">
         <field name="name">Report: Investment Request</field>
         <field name="model">lm.investment_request</field>
-        <field name="report_type">qweb-pdf</field>
+        <field name="report_type">qweb-html</field>
         <field name="binding_model_id" ref="model_lm_investment_request"/>
         <field name="binding_type">report</field>
         <field name="report_name">lands_management.report_investment_request_template</field>
@@ -13,6 +13,7 @@
         <t t-call="web.html_container">
 
             <t t-foreach="docs" t-as="doc">
+                <t t-call="web.basic_layout">
 
                 <div class="header" style="text-align: center; margin-bottom: 30px;">
                     <h1 style="font-size: 24px; color: #1a6aa2; margin-bottom: 10px;">محضر طلب أولي</h1>
@@ -510,6 +511,7 @@
                 </div>
             </t>
         </t>
+    </t>
 
     </template>
 </odoo>

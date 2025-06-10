@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="lm_delivery_report_view_form" model="ir.ui.view">
+        <field name="name">lm.delivery_report.form</field>
+        <field name="model">lm.delivery_report</field>
+        <field name="arch" type="xml">
+            <form string="محضر التسليم">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="مثال: محضر تسليم المشروع الأولي..."/>
+                        </h1>
+                    </div>
+                    <notebook>
+                        <page string="الأعمال التحضيرية" name="preparatory_tasks">
+                            <field name="preparatory_task_ids">
+                                <tree string="الأعمال التحضيرية" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="task_type"/>
+                                    <field name="other_work"
+                                           attrs="{'column_invisible': [('task_type', '!=', 'other_works')],
+                                                   'required': [('task_type', '=', 'other_works')]}"/>
+                                    <field name="description" widget="text"/>
+                                    <field name="duration_weeks"/>
+                                    <field name="notes" widget="text"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="lm_delivery_report_view_tree" model="ir.ui.view">
+        <field name="name">lm.delivery_report.tree</field>
+        <field name="model">lm.delivery_report</field>
+        <field name="arch" type="xml">
+            <tree string="محاضر التسليم">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="lm_delivery_report_view_search" model="ir.ui.view">
+        <field name="name">lm.delivery_report.search</field>
+        <field name="model">lm.delivery_report</field>
+        <field name="arch" type="xml">
+            <search string="بحث في محاضر التسليم">
+                <field name="name" string="بحث بالاسم"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="lm_delivery_report_action" model="ir.actions.act_window">
+        <field name="name">محاضر التسليم</field>
+        <field name="res_model">lm.delivery_report</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                لا توجد محاضر تسليم حتى الآن. انقر لإنشاء واحد!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="lm_delivery_root_menu"
+              name="إدارة التسليم"
+              parent="root_menu"
+              sequence="30"/>
+
+    <menuitem id="lm_delivery_report_menu"
+              name="محاضر التسليم"
+              parent="lm_delivery_root_menu"
+              action="lm_delivery_report_action"
+              sequence="10"/>
+
+</odoo>

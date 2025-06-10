@@ -7,21 +7,29 @@
         id="main_investment_menu"
         name="الفرص الاستثمارية"
         parent="root_menu"
+        sequence="10"
     />
     <menuitem
         id="main_investor_menu"
         name="المستثمرين"
         parent="root_menu"
+        sequence="20"
     />
     <menuitem
         id="main_investment_request_menu"
         name="طلبات الاستثمار"
         parent="root_menu"
+        sequence="1"
     />
     <menuitem
         id="preparation_menu"
         name="التهيئة"
         parent="root_menu"
         sequence="550"
+    />
+    <menuitem
+        id="main_land_request_review_menu"
+        name="مراجعة طلبات الأراضي"
+        parent="root_menu"
     />
 </odoo>
