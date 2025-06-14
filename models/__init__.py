@@ -7,4 +7,5 @@ from . import contract
 from . import followup_report
 from . import evaluation_report
 from . import delivery_report
+from . import wizard
 

@@ -30,3 +30,7 @@ access_project_implementation_phase_data_user,project.implementation.phase.data.
 access_lm_delivery_report_user,lm.delivery_report.user,model_lm_delivery_report,base.group_user,1,1,1,1
 access_lm_preparatory_task_user,lm.preparatory_task.user,model_lm_preparatory_task,base.group_user,1,1,1,1
 access_land_request_review_user,land.request.review.user,model_land_request_review,base.group_user,1,1,1,1
+access_delivery_report_wizard,delivery.report.wizard.user,model_delivery_report_wizard,base.group_user,1,1,1,1
+access_evaluation_report_wizard,evaluation.report.wizard.user,model_evaluation_report_wizard,base.group_user,1,1,1,1
+access_project_followup_report_wizard,project.followup.report.wizard.user,model_project_followup_report_wizard,base.group_user,1,1,1,1
+access_contract_wizard,contract.wizard.user,model_contract_wizard,base.group_user,1,1,1,1

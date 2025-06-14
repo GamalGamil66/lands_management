@@ -1,6 +1,3 @@
-from inspect import signature
-from xmlrpc.client import DateTime
-from typing_extensions import Required
 from odoo import models, fields, api, _
 
 class InvestmentRequest(models.Model):
@@ -12,10 +9,10 @@ class InvestmentRequest(models.Model):
     request_type = fields.Selection([
         ('chance', 'فرصة'),
         ('project', 'مشروع'),],
-        string='الحالة')
+        string='الحالة', default='project')
     # investment_id = fields.Many2one('lm.investment', string='الاستثمار', required=True)
     # investor_id = fields.Many2one('lm.investor', string='المستثمر', required=True)
-    funding_sources_ids = fields    .One2many('lm.funding_sources', 'investment_request_id', string='المصادر المالية')
+    funding_sources_ids = fields.One2many('lm.funding_sources', 'investment_request_id', string='المصادر المالية')
 
     investment_name = fields.Char(string='اسم الفرصة', required=True)
     description = fields.Text(string='الوصف')
@@ -24,11 +21,14 @@ class InvestmentRequest(models.Model):
     sub_sector_id = fields.Many2one('lm.sub_sector', string='القطاع الفرعي')
     state = fields.Selection([
         ('draft', 'مسودة'),
-        ('first_reviewed', 'مراجعة'),
+        ('confirmed', 'تم التأكيد'),
+        ('reviewed', 'تم المراجعة'),
         ('first_submitted', 'تسليم اولي'),
-        ('second_reviewed','تقييم'),
+        ('followed_up','تم المتابعة'),
         ('contracted', 'تم العقد'),
-        ('cancelled', 'تم الالغاء')],
+        ('evaluated','تم التقييم'),
+        ('cancelled', 'تم الالغاء'),
+        ('rejected', 'تم الرفض')],
          string='الحالة',default="draft")
     #location
     governorate = fields.Char(string='المحافظة')
@@ -76,17 +76,109 @@ class InvestmentRequest(models.Model):
     website = fields.Char(string='الموقع الإلكتروني')
     po_box = fields.Char(string='صندوق البريد')
 
+    evaluation_report_id = fields.Many2one('lm.evaluation_report', string='تقرير تقييم')
+    followup_report_id = fields.Many2one('project.followup.report', string='تقرير متابعة')
+    contract_id = fields.Many2one('lm.contract', string='عقد')
+    delivery_report_id = fields.Many2one('lm.delivery_report', string='تقرير تسليم')
+
 
     def action_confirm(self):
         for rec in self:
             print("dd")
-            rec.state = 'first_reviewed'
-    def cans_confirm(self):
+            rec.state = 'reviewed'
+    def action_cancel(self):
         for rec in self:
             print("dd")
             rec.state = 'draft'
-    def action_first_review(self):
+    def action_review(self):
         print("dd")
     def action_first_submit(self):
+        print("dd")
+    def action_follow_up(self):
+        print("dd")
+    def action_contract(self):
+        print("dd")
+    def action_evaluate(self):
+        print("dd")
+    def action_view_first_submit(self):
         #open report
         return self.env.ref('lands_management.action_print_investment_request').report_action(self)
+
+    def action_delivery_report_wizard(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Delivery Report Wizard',
+            'res_model': 'delivery.report.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'default_investment_request_id': self.id},
+        }
+    
+    def action_evaluation_report_wizard(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Evaluation Report Wizard',
+            'res_model': 'evaluation.report.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'default_investment_request_id': self.id},
+        }
+    
+    def action_project_followup_report_wizard(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Project Followup Report Wizard',
+            'res_model': 'project.followup.report.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'default_investment_request_id': self.id},
+        }
+    
+    def action_contract_wizard(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Contract Wizard',
+            'res_model': 'contract.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'default_investment_request_id': self.id},
+        }
+
+    def open_contract(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Contract',
+            'res_model': 'lm.contract',
+            'res_id': self.contract_id.id,
+            'view_mode': 'form',
+            'target': 'current'
+        }
+    def open_delivery_report(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Delivery Report',
+            'res_model': 'lm.delivery_report',
+            'res_id': self.delivery_report_id.id,
+            'view_mode': 'form',
+            'target': 'current'
+        }
+    
+    def open_evaluation_report(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Evaluation Report',
+            'res_model': 'lm.evaluation_report',
+            'res_id': self.evaluation_report_id.id,
+            'view_mode': 'form',
+            'target': 'current'
+        }
+
+    def open_project_followup_report(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Project Followup Report',
+            'res_model': 'lm.project_followup_report',
+            'res_id': self.followup_report_id.id,
+            'view_mode': 'form',
+            'target': 'current'
+        }

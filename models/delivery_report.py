@@ -6,6 +6,8 @@ class DeliveryReport(models.Model):
     name = fields.Char("الاسم")
     preparatory_task_ids = fields.One2many('lm.preparatory_task', 'delivery_report_id', string='الأعمال التحضيرية')
 
+    investment_request_ids = fields.One2many('lm.investment_request', 'delivery_report_id', string='طلبات الاستثمار')
+
 class PreparatoryTask(models.Model):
     _name = 'lm.preparatory_task'
     _description = 'الأعمال التحضيرية المطلوبة من المستثمر (محضر التسليم)'

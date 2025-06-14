@@ -19,6 +19,7 @@
         'views/FollowupReport.xml',
         'views/EvaluationReport.xml',
         'views/DeliveryReport.xml',
+        'views/wizard_views.xml',
     ],
     'application': True
 }

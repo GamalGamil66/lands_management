@@ -15,6 +15,12 @@ class Contract(models.Model):
         string='مراحل التنفيذ',
         help='مراحل التنفيذ المرتبطة بهذا العقد'
     )
+    investment_request_ids = fields.One2many(
+        'lm.investment_request',
+        'contract_id',
+        string='طلبات الاستثمار',
+        help='طلبات الاستثمار المرتبطة بهذا العقد'
+    )
 
 # models.py (continued)
 

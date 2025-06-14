@@ -28,6 +28,8 @@ class ProjectFollowupReport(models.Model):
     # ثامناً: التوصيات
     recommendations = fields.Html(string='التوصيات')
 
+    investment_request_ids = fields.One2many('lm.investment_request', 'followup_report_id', string='طلبات الاستثمار')
+
 class ProjectFollowupTaskEvaluation(models.Model):
     _name = 'project.followup.task.evaluation'
     _description = 'تقييم اعمال الخطة لمتابعة المشروع'

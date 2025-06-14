@@ -23,24 +23,49 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
+                        <!-- Wizard buttons -->
+                        <button name="action_delivery_report_wizard" type="object" string="محضر تسليم" class="btn-secondary" invisible="state != 'reviewed' or delivery_report_id != False"/>
+                        <button name="action_evaluation_report_wizard" type="object" string="تقرير تقييم" class="btn-secondary" invisible="state != 'first_submitted' or evaluation_report_id != False"/>
+                        <button name="action_project_followup_report_wizard" type="object" string="تقرير متابعة" class="btn-secondary" invisible="state != 'evaluated' or followup_report_id != False"/>
+                        <button name="action_contract_wizard" type="object" string="عقد" class="btn-secondary" invisible="state != 'followed_up' or contract_id != False"/>
+
                         <button name="action_confirm" invisible="state !='draft'" type="object" string="تأكيد" class="oe_highlight"/>
-                        <button name="cans_confirm" invisible="state =='draft'" type="object" string="الغاء" class="btn_primary"/>
-                        <button name="action_first_review" invisible="0" type="object" string="تجهيز محضر تسليم اولي"
-                                class="oe_highlight"/>
-                        <button name="action_first_submit" invisible="0" type="object" string="معاينة المحضر"/>
+                        <!-- <button name="action_review" invisible="0" type="object" string="تجهيز محضر تسليم اولي"
+                        class="oe_highlight"/>
+                        <button name="action_first_submit" class="oe_highlight" invisible="0" type="object" string="معاينة المحضر"/>
+                        <button name="action_view_first_submit" invisible="0" type="object" string="معاينة المحضر"/>
+                        <button name="action_follow_up" class="oe_highlight" invisible="0" type="object" string="متابعة"/>
+                        <button name="action_contract" class="oe_highlight" invisible="0" type="object" string="عقد"/>
+                        <button name="action_evaluate" class="oe_highlight" invisible="0" type="object" string="تقييم"/> -->
+                        <button name="action_cancel" invisible="state =='draft'" type="object" string="الغاء" class="btn_primary"/>
+
+                        <!-- <button name="action_reject" class="oe_highlight" invisible="0" type="object" string="رفض"/> -->
                         <field name="state" widget="statusbar"
-                            statusbar_visible="draft,first_reviewed,first_submitted,second_reviewed,contracted,cancelled"
-                            invisible="investor_name != 'investor'"/>
+                            statusbar_visible="draft,confirmed,reviewed,first_submitted,followed_up,contracted,evaluated,cancelled"
+                            invisible="request_type == 'chance'"/>
                         <field name="state" widget="statusbar"
-                            statusbar_visible="draft,first_reviewed,first_submitted,cancelled"
-                            invisible="investor_name == 'investor'"/>
+                            statusbar_visible="draft,confirmed,first_submitted,followed_up,contracted,evaluated,cancelled"
+                            invisible="request_type == 'project'"/>
                     </header>
                     <sheet>
+                        <div name="button_box" class="oe_button_box">
+                            <button name="open_delivery_report" type="object" string="Delivery Report" invisible="delivery_report_id == False"/>
+                            <button name="open_evaluation_report" type="object" string="Evaluation Report" invisible="evaluation_report_id == False"/>
+                            <button name="open_contract" type="object" string="Contract" invisible="contract_id == False"/>
+                            <button name="open_project_followup_report" type="object" string="Project Followup Report" invisible="followup_report_id == False"/>
+                        </div>
                         <div class="oe_title">
                             <h1>
                                 <field name="investment_name" placeholder="اسم الفرصة الاستثمارية"/>
                             </h1>
                         </div>
+                        <group>
+                            <field name="request_type"/>
+                            <field name="delivery_report_id" invisible="1"/>
+                            <field name="evaluation_report_id" invisible="1"/>
+                            <field name="contract_id" invisible="1"/>
+                            <field name="followup_report_id" invisible="1"/>
+                        </group>
                         <group string="بيانات المستثمر">
                             <group>
                                 <field name="investor_name"/>
