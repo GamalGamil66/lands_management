@@ -9,7 +9,7 @@ class InvestmentRequest(models.Model):
     request_type = fields.Selection([
         ('chance', 'فرصة'),
         ('project', 'مشروع'),],
-        string='الحالة', default='project')
+        string='نوع الطلب', default='project')
     # investment_id = fields.Many2one('lm.investment', string='الاستثمار', required=True)
     # investor_id = fields.Many2one('lm.investor', string='المستثمر', required=True)
     funding_sources_ids = fields.One2many('lm.funding_sources', 'investment_request_id', string='المصادر المالية')
@@ -80,6 +80,7 @@ class InvestmentRequest(models.Model):
     followup_report_id = fields.Many2one('project.followup.report', string='تقرير متابعة')
     contract_id = fields.Many2one('lm.contract', string='عقد')
     delivery_report_id = fields.Many2one('lm.delivery_report', string='تقرير تسليم')
+    land_request_review_id = fields.Many2one('land.request.review', string='تقرير مراجعة طلب الأراضي')
 
 
     def action_confirm(self):
@@ -143,6 +144,15 @@ class InvestmentRequest(models.Model):
             'target': 'new',
             'context': {'default_investment_request_id': self.id},
         }
+    def action_land_request_review_wizard(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Land Request Review Wizard',
+            'res_model': 'land.request.review.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'default_investment_request_id': self.id},
+        }
 
     def open_contract(self):
         return {
@@ -179,6 +189,16 @@ class InvestmentRequest(models.Model):
             'name': 'Project Followup Report',
             'res_model': 'lm.project_followup_report',
             'res_id': self.followup_report_id.id,
+            'view_mode': 'form',
+            'target': 'current'
+        }
+    
+    def open_land_request_review(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Land Request Review',
+            'res_model': 'land.request.review',
+            'res_id': self.land_request_review_id.id,
             'view_mode': 'form',
             'target': 'current'
         }

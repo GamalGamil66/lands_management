@@ -34,3 +34,4 @@ access_delivery_report_wizard,delivery.report.wizard.user,model_delivery_report_
 access_evaluation_report_wizard,evaluation.report.wizard.user,model_evaluation_report_wizard,base.group_user,1,1,1,1
 access_project_followup_report_wizard,project.followup.report.wizard.user,model_project_followup_report_wizard,base.group_user,1,1,1,1
 access_contract_wizard,contract.wizard.user,model_contract_wizard,base.group_user,1,1,1,1
+access_land_request_review_wizard,land.request.review.wizard.user,model_land_request_review_wizard,base.group_user,1,1,1,1

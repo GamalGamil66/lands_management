@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <form string="Create Delivery Report">
                 <group>
-                    <field name="investment_request_id"/>
+                    <field name="investment_request_id" invisible="1"/>
                     <field name="name"/>
                 </group>
                 <footer>
@@ -24,7 +24,7 @@
         <field name="arch" type="xml">
             <form string="Create Evaluation Report">
                 <group>
-                    <field name="investment_request_id"/>
+                    <field name="investment_request_id" invisible="1"/>
                     <field name="name"/>
                 </group>
                 <footer>
@@ -42,7 +42,7 @@
         <field name="arch" type="xml">
             <form string="Create Project Follow-up Report">
                 <group>
-                    <field name="investment_request_id"/>
+                    <field name="investment_request_id" invisible="1"/>
                     <field name="name"/>
                 </group>
                 <footer>
@@ -60,7 +60,25 @@
         <field name="arch" type="xml">
             <form string="Create Contract">
                 <group>
-                    <field name="investment_request_id"/>
+                    <field name="investment_request_id" invisible="1"/>
+                    <field name="name"/>
+                </group>
+                <footer>
+                    <button string="Create" name="action_create" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Land Request Review Wizard View -->
+    <record id="view_land_request_review_wizard_form" model="ir.ui.view">
+        <field name="name">land.request.review.wizard.form</field>
+        <field name="model">land.request.review.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Create Land Request Review">
+                <group>
+                    <field name="investment_request_id" invisible="1"/>
                     <field name="name"/>
                 </group>
                 <footer>
@@ -89,6 +107,13 @@
     <record id="action_project_followup_report_wizard" model="ir.actions.act_window">
         <field name="name">Create Project Follow-up Report</field>
         <field name="res_model">project.followup.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_land_request_review_wizard" model="ir.actions.act_window">
+        <field name="name">Create Land Request Review</field>
+        <field name="res_model">land.request.review.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>

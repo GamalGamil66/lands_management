@@ -214,6 +214,8 @@ class LandRequestReview(models.Model):
         help="Current stage of the review process."
     )
 
+    investment_request_ids = fields.One2many('lm.investment_request', 'land_request_review_id', string='Investment Requests')
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
