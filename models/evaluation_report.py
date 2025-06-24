@@ -6,7 +6,16 @@ class EvaluationReport(models.Model):
     name = fields.Char("الاسم")
     project_detailed_activity_line_ids = fields.One2many('project.detailed.activity.line', 'evaluation_report_id', 'بنود تقييم نشاط مفصل للمشروع')
 
-    investment_request_ids = fields.One2many('lm.investment_request', 'evaluation_report_id', string='طلبات الاستثمار')
+    investment_request_id = fields.Many2one('lm.investment_request', string='طلب الاستثمار')
+
+    state = fields.Selection([
+        ('draft', 'مسودة'),
+        ('confirmed', 'تم التأكيد')],
+         string='الحالة',default="draft")
+    
+    def action_confirm(self):
+        for record in self:
+            record.state = 'confirmed'
 
 class ProjectDetailedActivityLine(models.Model):
     _name = 'project.detailed.activity.line'

@@ -76,7 +76,7 @@ class InvestmentRequest(models.Model):
     website = fields.Char(string='الموقع الإلكتروني')
     po_box = fields.Char(string='صندوق البريد')
 
-    evaluation_report_id = fields.Many2one('lm.evaluation_report', string='تقرير تقييم')
+    evaluation_report_ids = fields.One2many('lm.evaluation_report', 'investment_request_id', string='تقارير التقييم')
     followup_report_id = fields.Many2one('project.followup.report', string='تقرير متابعة')
     contract_id = fields.Many2one('lm.contract', string='عقد')
     delivery_report_id = fields.Many2one('lm.delivery_report', string='تقرير تسليم')
@@ -86,7 +86,10 @@ class InvestmentRequest(models.Model):
     def action_confirm(self):
         for rec in self:
             print("dd")
-            rec.state = 'reviewed'
+            if self.request_type == 'chance':
+                rec.state = 'reviewed'
+            else:
+                rec.state = 'confirmed'
     def action_cancel(self):
         for rec in self:
             print("dd")
@@ -173,13 +176,13 @@ class InvestmentRequest(models.Model):
             'target': 'current'
         }
     
-    def open_evaluation_report(self):
+    def open_evaluation_reports(self):
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Evaluation Report',
+            'name': 'Evaluation Reports',
             'res_model': 'lm.evaluation_report',
-            'res_id': self.evaluation_report_id.id,
-            'view_mode': 'form',
+            'domain': [('investment_request_id', '=', self.id)],
+            'view_mode': 'tree,form',
             'target': 'current'
         }
 

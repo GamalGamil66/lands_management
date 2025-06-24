@@ -22,6 +22,16 @@ class Contract(models.Model):
         help='طلبات الاستثمار المرتبطة بهذا العقد'
     )
 
+    state = fields.Selection([
+        ('draft', 'مسودة'),
+        ('confirmed', 'تم التأكيد')],
+         string='الحالة',default="draft")
+
+    def action_confirm(self):
+        for record in self:
+            record.state = 'confirmed'
+            record.investment_request_ids.write({'state': 'contracted'})
+
 # models.py (continued)
 
 class ProjectImplementationPhaseData(models.Model):

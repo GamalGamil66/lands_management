@@ -252,6 +252,7 @@ class LandRequestReview(models.Model):
     def action_complete(self):
         for record in self:
             record.state = 'completed'
+            record.investment_request_ids.write({'state': 'reviewed'})
         return True
 
     def action_reset_to_draft(self):

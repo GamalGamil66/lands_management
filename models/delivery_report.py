@@ -8,6 +8,16 @@ class DeliveryReport(models.Model):
 
     investment_request_ids = fields.One2many('lm.investment_request', 'delivery_report_id', string='طلبات الاستثمار')
 
+    state = fields.Selection([
+        ('draft', 'مسودة'),
+        ('confirmed', 'تم التأكيد')],
+         string='الحالة',default="draft")
+    
+    def action_confirm(self):
+        for record in self:
+            record.state = 'confirmed'
+            record.investment_request_ids.write({'state': 'first_submitted'})
+
 class PreparatoryTask(models.Model):
     _name = 'lm.preparatory_task'
     _description = 'الأعمال التحضيرية المطلوبة من المستثمر (محضر التسليم)'

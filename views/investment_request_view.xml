@@ -26,25 +26,18 @@
                         <button name="action_confirm" invisible="state !='draft'" type="object" string="تأكيد" class="oe_highlight"/>
 
                         <!-- Wizard buttons -->
-                        <!-- <button name="action_land_request_review_wizard" type="object" string="مراجعة طلب الأرض" class="btn-secondary" invisible="state != 'confirmed' or land_request_review_id != False"/>
+                        <button name="action_land_request_review_wizard" type="object" string="مراجعة طلب الأرض" class="btn-secondary" invisible="state != 'confirmed' or land_request_review_id != False"/>
                         <button name="action_delivery_report_wizard" type="object" string="محضر تسليم" class="btn-secondary" invisible="state != 'reviewed' or delivery_report_id != False"/>
-                        <button name="action_evaluation_report_wizard" type="object" string="تقرير تقييم" class="btn-secondary" invisible="state != 'first_submitted' or evaluation_report_id != False"/>
-                        <button name="action_project_followup_report_wizard" type="object" string="تقرير متابعة" class="btn-secondary" invisible="state != 'evaluated' or followup_report_id != False"/>
-                        <button name="action_contract_wizard" type="object" string="عقد" class="btn-secondary" invisible="state != 'followed_up' or contract_id != False"/> -->
+                        <button name="action_project_followup_report_wizard" type="object" string="تقرير متابعة" class="btn-secondary" invisible="state != 'first_submitted' or followup_report_id != False"/>
+                        <button name="action_contract_wizard" type="object" string="عقد" class="btn-secondary" invisible="state != 'followed_up' or contract_id != False"/>
+                        <button name="action_evaluation_report_wizard" type="object" string="تقرير تقييم" class="btn-secondary" invisible="state != 'contracted' or evaluation_report_ids == False"/>
 
-                        <button name="action_land_request_review_wizard" type="object" string="مراجعة طلب الأرض" class="btn-secondary" invisible="land_request_review_id != False"/>
+                        <!-- <button name="action_land_request_review_wizard" type="object" string="مراجعة طلب الأرض" class="btn-secondary" invisible="land_request_review_id != False"/>
                         <button name="action_delivery_report_wizard" type="object" string="محضر تسليم" class="btn-secondary" invisible="delivery_report_id != False"/>
-                        <button name="action_evaluation_report_wizard" type="object" string="تقرير تقييم" class="btn-secondary" invisible="evaluation_report_id != False"/>
+                        <button name="action_evaluation_report_wizard" type="object" string="تقرير تقييم" class="btn-secondary" invisible="evaluation_report_ids != False"/>
                         <button name="action_project_followup_report_wizard" type="object" string="تقرير متابعة" class="btn-secondary" invisible="followup_report_id != False"/>
-                        <button name="action_contract_wizard" type="object" string="عقد" class="btn-secondary" invisible="contract_id != False"/>
+                        <button name="action_contract_wizard" type="object" string="عقد" class="btn-secondary" invisible="contract_id != False"/> -->
 
-                        <!-- <button name="action_review" invisible="0" type="object" string="تجهيز محضر تسليم اولي"
-                        class="oe_highlight"/>
-                        <button name="action_first_submit" class="oe_highlight" invisible="0" type="object" string="معاينة المحضر"/>
-                        <button name="action_view_first_submit" invisible="0" type="object" string="معاينة المحضر"/>
-                        <button name="action_follow_up" class="oe_highlight" invisible="0" type="object" string="متابعة"/>
-                        <button name="action_contract" class="oe_highlight" invisible="0" type="object" string="عقد"/>
-                        <button name="action_evaluate" class="oe_highlight" invisible="0" type="object" string="تقييم"/> -->
                         <button name="action_cancel" invisible="state =='draft'" type="object" string="الغاء" class="btn_primary"/>
 
                         <!-- <button name="action_reject" class="oe_highlight" invisible="0" type="object" string="رفض"/> -->
@@ -58,7 +51,7 @@
                     <sheet>
                         <div name="button_box" class="oe_button_box">
                             <button name="open_delivery_report" icon="fa-file-text-o" type="object" string="محضر تسليم" invisible="delivery_report_id == False"/>
-                            <button name="open_evaluation_report" icon="fa-file-text-o" type="object" string="تقرير تقييم" invisible="evaluation_report_id == False"/>
+                            <button name="open_evaluation_reports" icon="fa-file-text-o" type="object" string="تقرير تقييم" invisible="evaluation_report_ids == False"/>
                             <button name="open_contract" icon="fa-file-text-o" type="object" string="عقد" invisible="contract_id == False"/>
                             <button name="open_project_followup_report" icon="fa-file-text-o" type="object" string="تقرير متابعة" invisible="followup_report_id == False"/>
                             <button name="open_land_request_review" icon="fa-file-text-o" type="object" string="مراجعة الطلب" invisible="land_request_review_id == False"/>
@@ -71,7 +64,7 @@
                         <group>
                             <field name="request_type"/>
                             <field name="delivery_report_id" invisible="1"/>
-                            <field name="evaluation_report_id" invisible="1"/>
+                            <field name="evaluation_report_ids" invisible="1"/>
                             <field name="contract_id" invisible="1"/>
                             <field name="followup_report_id" invisible="1"/>
                             <field name="land_request_review_id" invisible="1"/>

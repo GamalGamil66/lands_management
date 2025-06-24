@@ -30,6 +30,16 @@ class ProjectFollowupReport(models.Model):
 
     investment_request_ids = fields.One2many('lm.investment_request', 'followup_report_id', string='طلبات الاستثمار')
 
+    state = fields.Selection([
+        ('draft', 'مسودة'),
+        ('confirmed', 'تم التأكيد')],
+         string='الحالة',default="draft")
+    
+    def action_confirm(self):
+        for record in self:
+            record.state = 'confirmed'
+            record.investment_request_ids.write({'state': 'followed_up'})
+
 class ProjectFollowupTaskEvaluation(models.Model):
     _name = 'project.followup.task.evaluation'
     _description = 'تقييم اعمال الخطة لمتابعة المشروع'

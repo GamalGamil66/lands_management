@@ -35,7 +35,7 @@ class EvaluationReportWizard(models.TransientModel):
         self.ensure_one()
         evaluation_report = self.env['lm.evaluation_report'].create({
             'name': self.name,
-            'investment_request_ids': self.investment_request_id,
+            'investment_request_id': self.investment_request_id.id,
         })
         return {
             'type': 'ir.actions.act_window',
