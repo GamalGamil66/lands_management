@@ -4,7 +4,7 @@
         <field name="name">delivery.report.wizard.form</field>
         <field name="model">delivery.report.wizard</field>
         <field name="arch" type="xml">
-            <form string="Create Delivery Report">
+            <form string="انشاء محضر تسليم">
                 <group>
                     <field name="investment_request_id" invisible="1"/>
                     <field name="name"/>
@@ -22,7 +22,7 @@
         <field name="name">evaluation.report.wizard.form</field>
         <field name="model">evaluation.report.wizard</field>
         <field name="arch" type="xml">
-            <form string="Create Evaluation Report">
+            <form string="انشاء تقرير تقييم">
                 <group>
                     <field name="investment_request_id" invisible="1"/>
                     <field name="name"/>
@@ -40,7 +40,7 @@
         <field name="name">project.followup.report.wizard.form</field>
         <field name="model">project.followup.report.wizard</field>
         <field name="arch" type="xml">
-            <form string="Create Project Follow-up Report">
+            <form string="انشاء تقرير متابعة">
                 <group>
                     <field name="investment_request_id" invisible="1"/>
                     <field name="name"/>
@@ -58,7 +58,7 @@
         <field name="name">contract.wizard.form</field>
         <field name="model">contract.wizard</field>
         <field name="arch" type="xml">
-            <form string="Create Contract">
+            <form string="انشاء عقد">
                 <group>
                     <field name="investment_request_id" invisible="1"/>
                     <field name="name"/>
@@ -76,7 +76,7 @@
         <field name="name">land.request.review.wizard.form</field>
         <field name="model">land.request.review.wizard</field>
         <field name="arch" type="xml">
-            <form string="Create Land Request Review">
+            <form string="انشاء مراجعة لطلب الاستثمار">
                 <group>
                     <field name="investment_request_id" invisible="1"/>
                     <field name="name"/>

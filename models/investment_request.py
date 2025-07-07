@@ -57,24 +57,26 @@ class InvestmentRequest(models.Model):
     # funding_sources_ids = fields.One2many('lm.funding_sources', 'investment_request_id', string='المصادر المالية')
     labor_ids = fields.One2many('lm.labor', 'investment_request_id', string='العمالة')
     time_line_ids = fields.One2many('lm.timeline', 'investment_request_id', string='الجدول الزمني')
-    investor_id = fields.Many2one('lm.investor', string='المستثمر')
+    # investor_id = fields.Many2one('lm.investor', string='المستثمر')
 
-    investor_name = fields.Char(string='اسم المستثمر', required=True)
-    legal_form = fields.Selection([
-        ('sole_proprietorship', 'ملكية فردية'),
-        ('partnership', 'شراكة'),
-        ('limited_liability_company', 'شركة ذات مسؤولية محدودة'),
-        ('public_company', 'شركة مساهمة')],
-        string='الشكل القانوني')
-    nationality = fields.Many2one('res.country', string='الجنسية')
-    commercial_reg = fields.Char(string='السجل التجاري')
-    id_number = fields.Char(string='رقم الهوية', unique=True)
-    address = fields.Text(string='العنوان')
-    phone = fields.Char(string='الهاتف')
-    mobile = fields.Char(string='الجوال')
-    email = fields.Char(string='البريد الإلكتروني')
-    website = fields.Char(string='الموقع الإلكتروني')
-    po_box = fields.Char(string='صندوق البريد')
+    # investor_name = fields.Char(string='اسم المستثمر', required=True)
+    investor_id = fields.Many2one('res.partner', string='المستثمر')
+
+    # legal_form = fields.Selection([
+    #     ('sole_proprietorship', 'ملكية فردية'),
+    #     ('partnership', 'شراكة'),
+    #     ('limited_liability_company', 'شركة ذات مسؤولية محدودة'),
+    #     ('public_company', 'شركة مساهمة')],
+    #     string='الشكل القانوني')
+    # nationality = fields.Many2one('res.country', string='الجنسية')
+    # commercial_reg = fields.Char(string='السجل التجاري')
+    # id_number = fields.Char(string='رقم الهوية', unique=True)
+    # address = fields.Text(string='العنوان')
+    # phone = fields.Char(string='الهاتف')
+    # mobile = fields.Char(string='الجوال')
+    # email = fields.Char(string='البريد الإلكتروني')
+    # website = fields.Char(string='الموقع الإلكتروني')
+    # po_box = fields.Char(string='صندوق البريد')
 
     evaluation_report_ids = fields.One2many('lm.evaluation_report', 'investment_request_id', string='تقارير التقييم')
     followup_report_id = fields.Many2one('project.followup.report', string='تقرير متابعة')

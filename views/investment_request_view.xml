@@ -12,7 +12,8 @@
                 <tree>
                     <field name="request_date"/>
                     <field name="investment_name"/>
-                    <field name="investor_name"/>
+                    <field name="investor_id"/>
+                    <!-- <field name="investor_name"/> -->
                 </tree>
             </field>
         </record>
@@ -59,6 +60,7 @@
                         <div class="oe_title">
                             <h1>
                                 <field name="investment_name" placeholder="اسم الفرصة الاستثمارية"/>
+                                <field name="investor_id" />
                             </h1>
                         </div>
                         <group>
@@ -69,7 +71,7 @@
                             <field name="followup_report_id" invisible="1"/>
                             <field name="land_request_review_id" invisible="1"/>
                         </group>
-                        <group string="بيانات المستثمر">
+                        <!-- <group string="بيانات المستثمر">
                             <group>
                                 <field name="investor_name"/>
                                 <field name="legal_form"/>
@@ -85,7 +87,7 @@
                                 <field name="website"/>
                                 <field name="po_box"/>
                             </group>
-                        </group>
+                        </group> -->
 
                         <group>
                             <group string="بيانات الفرصة">
